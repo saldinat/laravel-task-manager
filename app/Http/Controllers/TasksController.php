@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Task;
 class TasksController extends Controller
@@ -18,12 +18,21 @@ class TasksController extends Controller
 	}
 	public function store() {
 		$this->validate(request(), [
-			
-			'title' => 'required'
+			'title' => 'required'	
 		]);
-		Task::create(request(['user_id', 'title', 'body']));
+		
+		Task::create(request(['user_id', 'title', 'body', 'deadline']));
 		return redirect('/tasks');
 	}
+	// public function store_comment(Request $request, Task $task) {
+ 		// $this->validate(request(), [
+			// 'comment' => 'required'
+		// ]); 
+		// $task->comments .= request('comment')."#";
+		// $task->save();
+		// return view('tasks.show', compact('task'));
+	// }
+	
 	public function edit(Task $task)
     {
         return view('tasks.edit')
@@ -31,10 +40,17 @@ class TasksController extends Controller
     }
 	public function updateStatus(Request $request, Task $task)
     {
-		//$task->body = request('body');
-		//$task->body = request('body');
         $task->completed = !$task->completed;
-		$task->user_id = request('user_id');
+		if($task->reserved_by) {
+			$task->user_id = $task->reserved_by;
+			$task->reserved_by = null;
+		}
+        $task->save();
+        return redirect('/tasks');
+    }
+	public function reserve(Request $request, Task $task)
+    {
+		$task->reserved_by = request('user_id');
         $task->save();
         return redirect('/tasks');
     }
@@ -42,8 +58,8 @@ class TasksController extends Controller
     {
 		$task->title = request('title');
 		$task->body = request('body');
-        $task->completed = !$task->completed;
 		$task->user_id = request('user_id');
+		$task->deadline = Carbon::parse($request->deadline);
         $task->save();
         return redirect('/tasks');
     }
@@ -51,5 +67,10 @@ class TasksController extends Controller
     {
     	$task->delete();
     	return redirect('/tasks');
+    }
+	public function users()
+    {
+    	
+    	return view('tasks.users');
     }
 }

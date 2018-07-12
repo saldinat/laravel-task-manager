@@ -1,16 +1,11 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    </head>
-    <body>
-		<ul>
-			@foreach ($tasks as $task)
-				<li>User with id {{$task->user_id}}:  <a href="/tasks/{{$task->id}}">{{ $task->body }}</a></li>
-			@endforeach
-		</ul>
-    </body>
-</html>
+@extends('layouts.master')
+@section('assets')
+    <link rel="stylesheet" href="css/welcome.css">
+@endsection
+@section('content')
+	<h1 class="cover-heading">Simple task manager</h1>
+        <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+        <p class="lead">
+          <a href="tasks/create" class="btn btn-lg btn-secondary">Create your first task</a>
+        </p>
+@endsection
