@@ -5,7 +5,16 @@
 @endsection
 @section('content')
 <div class="page-header">
-    <h1>List of tasks</h1>      
+    <h1>List of tasks</h1>  
+<form action="/tasks/delete_all" method="POST" >
+						{{ csrf_field() }}
+						{{ method_field('POST') }}
+						<div class="form-group">
+							<button type="submit" class="btn delete">
+								<i class="fa fa-trash-o" aria-hidden="true">Delete all tasks</i>
+							</button>
+						</div>
+					</form>    
 </div>
 <div class="row">
 <div class="col-md-12">
@@ -31,8 +40,7 @@
 				<div class="alert alert-primary">Due today! </div>
 			@elseif ($task->deadline!= null && $task->deadline->diffInDays(Carbon::now()) == 0)
 				<div class="alert alert-warning">Due tomorrow</div>
-			<!--@elseif ($task->deadline!= null && $task->deadline->diffInDays(Carbon::now()) == 1)
-				<div class="alert alert-warning">1 day left</div>-->
+			
 			@elseif ((App\Task::where('deadline', '<', Carbon::now())->get())->contains($task))
 				<div class="alert alert-danger" role="alert">
 					Deadline passed {{ date('F d, Y', strtotime($task->deadline)) }}
@@ -70,7 +78,7 @@
 	@foreach (App\Task::unassigned() as $task)
 		@if (!$task->completed)
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-9">
 					<li><a href="/tasks/{{$task->id}}">{{ $task->title }}</a> created {{ $task->created_at->diffForHumans()}}</li>
 					@if ($task->deadline!= null && $task->deadline->isToday())
 						<div class="alert alert-primary">Due today! </div>

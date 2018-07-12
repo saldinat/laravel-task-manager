@@ -48,19 +48,24 @@
 
 
 @foreach ($task->comments as $comment)
-		<div class="row">
+	<div class="row">
 		<div class="col-md-8 comment">
 			<h5>user <small>{{ $comment->created_at->diffForHumans()}}</small></h5>
 				{!! $comment->body !!}
 		</div>
+		<div class="col-md-4">
+			<form action="/tasks/{{ $task->id }}/delete_comment" method="POST">
+				{{ csrf_field() }}
+				{{ method_field('DELETE') }}
+				<button type="submit" class="btn delete" >
+					<i class="fa fa-trash-o" aria-hidden="true"></i>
+				</button>
+			</form>
 		</div>
-		@endforeach
-	
-		
-	
-	<div class="form-group">
+	</div>
+@endforeach
+<div class="form-group">
 	@include('layouts.errors')
-</div>
 </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

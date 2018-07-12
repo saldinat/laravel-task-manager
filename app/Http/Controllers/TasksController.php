@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Task;
+use App\Comment;
 class TasksController extends Controller
 {
     public function index() {
@@ -16,12 +17,17 @@ class TasksController extends Controller
 	public function create() {
 		return view('tasks.create');
 	}
-	public function store() {
+	public function store(Request $request, Task $task) {
 		$this->validate(request(), [
 			'title' => 'required'	
 		]);
-		
-		Task::create(request(['user_id', 'title', 'body', 'deadline']));
+		//Task::create(request(['user_id', 'title', 'body', 'deadline'])); whyyyyyy
+		$task = new Task;
+        $task->user_id = $request->user_id;
+		$task->title = $request->title;
+		$task->body = $request->body;
+		$task->deadline = Carbon::parse($task->deadline);
+        $task->save();
 		return redirect('/tasks');
 	}
 	// public function store_comment(Request $request, Task $task) {
@@ -66,6 +72,12 @@ class TasksController extends Controller
 	public function destroy(Task $task)
     {
     	$task->delete();
+    	return redirect('/tasks');
+    }
+	public function delete_all()
+    {
+    	Task::query()->truncate();
+		Comment::query()->truncate();
     	return redirect('/tasks');
     }
 	public function users()
