@@ -26,8 +26,7 @@
 		
 		{!! $task->body !!}
 		<br>
-		
-		<a class="btn btn-default" href="/tasks/{{ $task->id }}/edit">Edit</a>
+		<button class="btn btn-default" onclick="location.href = '/tasks/{{ $task->id }}/edit';">Edit</button>
 	</div>
 </div>
 <div class="row">
