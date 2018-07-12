@@ -19,7 +19,8 @@ class TasksController extends Controller
 	}
 	public function store(Request $request, Task $task) {
 		$this->validate(request(), [
-			'title' => 'required'	
+			'title' => 'required',
+			'user_id' => 'numeric'	
 		]);
 		//Task::create(request(['user_id', 'title', 'body', 'deadline'])); whyyyyyy
 		$task = new Task;
@@ -46,6 +47,7 @@ class TasksController extends Controller
     }
 	public function updateStatus(Request $request, Task $task)
     {
+		
         $task->completed = !$task->completed;
 		if($task->reserved_by) {
 			$task->user_id = $task->reserved_by;
@@ -56,12 +58,18 @@ class TasksController extends Controller
     }
 	public function reserve(Request $request, Task $task)
     {
+		$this->validate(request(), [
+			'reserved_by' => 'required|numeric'	
+		]);
 		$task->reserved_by = request('user_id');
         $task->save();
         return redirect('/tasks');
     }
 	public function update(Request $request, Task $task)
     {
+		$this->validate(request(), [
+			'user_id' => 'numeric'	
+		]);
 		$task->title = request('title');
 		$task->body = request('body');
 		$task->user_id = request('user_id');

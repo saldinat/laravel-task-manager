@@ -40,7 +40,7 @@
 	  <button type="submit" class="btn btn-default">Save</button>
 	</form>
 <div class="form-group">
-	@extends('layouts.errors')
+	@include('layouts.errors')
 </div>
 	</div>
 	</div>
