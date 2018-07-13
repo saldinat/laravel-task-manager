@@ -18,15 +18,14 @@
 
 <div class="row">
 	<div class="col-md-12">
-	<div class="page-header">
-    <h1>Task #{{$task->id}}</h1>   
-</div>
-		   
+		<div class="page-header">
+			<h1>Task #{{$task->id}}</h1>   
+		</div>
 		<h2>{{ $task->title }} @if($task->deadline) <small>Deadline: {{ date('F d, Y', strtotime($task->deadline)) }}</small> @endif</h2>
 		
 		{!! $task->body !!}
 		<br>
-		<button class="btn btn-default" onclick="location.href = '/tasks/{{ $task->id }}/edit';">Edit!</button>
+		<button class="btn btn-default" onclick="location.href = '/tasks/{{ $task->id }}/edit';">Edit</button>
 	</div>
 </div>
 <div class="row">
@@ -42,7 +41,6 @@
 			</button>
 		</form>
 	</div>
-	
 </div>
 
 
@@ -53,7 +51,7 @@
 				{!! $comment->body !!}
 		</div>
 		<div class="col-md-4">
-			<form action="/tasks/{{ $task->id }}/delete_comment" method="POST">
+			<form action="/tasks/{{ $task->id }}/delete_comment/{{$comment->id}}" method="POST">
 				{{ csrf_field() }}
 				{{ method_field('DELETE') }}
 				<button type="submit" class="btn delete" >
@@ -68,12 +66,11 @@
 </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
 <script>
 $(document).ready(function() {
-  
   $('#summernote').summernote({
         placeholder: 'Body',
         tabsize: 2,

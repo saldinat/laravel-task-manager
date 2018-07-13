@@ -1,8 +1,14 @@
 <?php use Carbon\Carbon; ?>
+
 @extends('layouts.master')
 @section('assets')
     <link rel="stylesheet" href="css/index.css">
 @endsection
+<style>
+.custom{
+	width: 42px !important;
+}
+</style>
 @section('content')
 <div class="page-header">
     <h1>List of tasks</h1>  
@@ -60,7 +66,7 @@
 			<form action="/tasks/{{ $task->id }}" method="POST">
 				{{ csrf_field() }}
 				{{ method_field('DELETE') }}
-				<button type="submit" class="btn delete" >
+				<button type="submit" class="btn delete custom">
 					<i class="fa fa-trash-o" aria-hidden="true"></i>
 				</button>
 			</form>
@@ -111,7 +117,7 @@
 						{{ csrf_field() }}
 						{{ method_field('DELETE') }}
 						<div class="form-group">
-							<button type="submit" class="btn delete">
+							<button type="submit" class="btn delete custom">
 								<i class="fa fa-trash-o" aria-hidden="true"></i>
 							</button>
 						</div>
@@ -155,7 +161,7 @@
 		<form action="/tasks/{{ $task->id }}" method="POST" class="form-inline">
 		{{ csrf_field() }}
 		{{ method_field('DELETE') }}
-		<button type="submit" class="btn delete">
+		<button type="submit" class="btn delete custom">
 		<i class="fa fa-trash-o" aria-hidden="true"></i>
 		</button>
 		</form>
@@ -191,7 +197,7 @@
 			<form action="/tasks/{{ $task->id }}" method="POST">
 				{{ csrf_field() }}
 				{{ method_field('DELETE') }}
-				<button type="submit" class="btn delete">
+				<button type="submit" class="btn delete custom">
 					<i class="fa fa-trash-o" aria-hidden="true"></i>
 				</button>
 			</form>

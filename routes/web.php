@@ -21,7 +21,7 @@ Route::get('/tasks/{task}/edit', 'TasksController@edit');
 Route::put('/tasks/{task}/edit', 'TasksController@update');
 
 Route::delete('/tasks/{task}', 'TasksController@destroy');
-Route::delete('/tasks/{task}/delete_comment', 'CommentController@destroy');
+Route::delete('/tasks/{task}/delete_comment/{comment}', 'CommentController@destroy');
 
 Route::post('/tasks/{task}', 'TasksController@delete_all');
 Route::get('/tasks/{task}', 'TasksController@show');
